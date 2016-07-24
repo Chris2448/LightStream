@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="~/css/style.css" type="text/css" media="all" />
+    <script type="text/javascript" src="~/js/jquery-1.4.2.min.js"></script>
+    <script type="text/javascript" src="~/js/jquery-func.js"></script>
+</head>
+<body>
+    <!-- Shell -->
+<div id="shell">
+    	<!-- Header -->
+	<div id="header">
+		<h1 id="logo"><a href="@Url.Action("Index", "Home")">LightStream</a></h1>
+		<div class="social">
+		</div>
+		
+		<!-- Navigation -->
+		<div id="navigation">
+		</div>
+		<!-- end Navigation -->
+		
+		<!-- Sub-menu -->
+		<div id="sub-navigation">
+			<div id="search">
+				<form action="@Url.Action("search", "Home", FormMethod.Get)" method="get" accept-charset="utf-8">
+					<label for="search-field">SEARCH</label>					
+					<input type="text" name="q" value="Enter search here" id="search-field" title="Enter search here" class="blink search-field"  />
+					<input type="submit" value="GO!" class="search-button" />
+				</form>
+			</div>
+		</div>
+		<!-- end Sub-Menu -->
+		
+	</div>
+	<!-- end Header -->
+
+    @RenderBody()
+
+    <!-- Footer -->
+    <div id="footer">
+        <p> &copy; 2016 LightStream. All Rights Reserved.</p>
+    </div>
+    <!-- end Footer -->
+</div>
+    <!-- end Shell -->
+</body>
+</html>

@@ -1,0 +1,83 @@
+﻿@model dynamic
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Home Page | Official";
+}
+
+<!-- Main -->
+<div id="main">
+    <!-- Content -->
+    <div id="content">
+
+        <!-- Box -->
+        <div class="box">
+            <div class="head"></div>
+
+            <!-- Movie -->
+            <div class="movie">
+                <div class="movie-image">
+                    <span class="play">
+                        <span class="name">@Model.Person.Name</span>
+                    </span>
+                    <img src="~/css/images/blank.png" alt="@Model.Person.Name" width="153" height="214"/>
+                </div>
+            </div>
+            <!-- end Movie -->
+            <h5>@Model.Person.Name</h5>
+
+            <div class="cl">&nbsp;</div>
+        </div>
+        <!-- end Box -->
+
+        @{
+            var x = 0;
+        }
+
+        @for (var i=0 ; i<Model.Programs.Count ; i++)
+        {
+            if (x%6 == 0)
+            {
+                @Html.Raw("<!-- Box --><div class=\"box\"><div class=\"head\" ></div>")
+            }
+            <!-- Movie -->
+            @(((x + 1)%6 != 0) ? Html.Raw("<div class=\"movie\">") : Html.Raw("<div class=\"movie last\">"))
+
+            <div class="movie-image">
+                <a href="@Url.Action("programinfo", "Home", new {id = Model.Programs[i]._id})">
+                    <span class="play">
+                        <span class="name">@Model.Programs[i].Title</span>
+                    </span>
+                    <img src="@Model.Programs[i].Poster" alt="@Model.Programs[i].Title" width="153" height="214"/>
+                </a>
+            </div>
+
+            <div class="rating">
+                <p>RATING</p>
+                <div class="stars">
+                    <div class="stars-in" style="width: @Html.Raw((double.Parse(Model.Programs[i].Rating)/2/5)*60 + "px")">
+
+                    </div>
+                </div>
+            </div>
+            if (true)
+            {
+                @Html.Raw("</div>")
+            }
+            <!-- end Movie -->
+
+            {
+                x = x + 1;
+            }
+
+            if (x%6 == 0 || i == Model.Programs.Count - 1) // or we are on the last element. Fix the one on Index as well
+            {
+                @Html.Raw("<div class=\"cl\">&nbsp;</div></div><!-- end Box -->")
+            }
+        }
+
+    </div>
+    <!-- end Content -->
+    <div class="cl">&nbsp;</div>
+</div>
+<!-- end Main -->

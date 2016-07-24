@@ -1,0 +1,136 @@
+﻿@model Project.Models.ProgramSuggested
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Home Page | Official";
+}
+
+<!-- Main -->
+<div id="main">
+    <!-- Content -->
+    <div id="content">
+
+        <!-- Box -->
+        <div class="box">
+            <div class="head"></div>
+
+            <!-- Movie -->
+            <div class="movie">
+
+                <div class="movie-image">
+                    <a href="@Model.Program.Url">
+                        <span class="play">
+                            <span class="name">@Model.Program.Title</span>
+                        </span>
+                        <img src="@Model.Program.Poster" alt="movie" width="153" height="214"/>
+                    </a>
+                </div>
+
+                <div class="rating">
+                    <p>RATING</p>
+                    <div class="stars">
+                        <div class="stars-in" style="width: @Html.Raw((double.Parse(Model.Program.Rating)/2/5)*60 + "px")">
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- end Movie -->
+            <!-- Description -->
+            <h5>@Model.Program.Title</h5>
+
+            @{ var last = Model.Program.Genres.Last(); }
+            <h6>@DateTime.Parse(Model.Program.Release).ToString("MMMM yyyy") &emsp;|&emsp;@TimeSpan.FromMinutes(Model.Program.Runtime).ToString(@"h\hmm\m")&emsp;|&emsp;@foreach (var genre in Model.Program.Genres)
+                                                                                                                                        {
+                                                                                                                                            @(genre.Equals(last) ? Html.Raw(genre) : Html.Raw(genre + ", "))
+                                                                                                                                        }</h6>
+            <br>
+            <h7>@Model.Program.Plot</h7>
+            <br><br>
+            @{ last = Model.Program.Actors.Last(); }
+            <h7>Cast: @foreach (var actor in Model.Program.Actors)
+                      {
+                          <h8>@(actor.Equals(last) ? Html.Raw("<a href=\"" + Url.Action("peopleinfo", "Home", new { name = actor }) + "\">" + actor + "</a>") : Html.Raw("<a href=\"" + Url.Action("peopleinfo", "Home", new { name = actor }) + "\">" + actor + "</a>" + ", "))</h8>
+                      }</h7>
+            <br>
+
+            @{ last = Model.Program.Directors.Last(); }
+            <h7>Director(s): @foreach (var director in Model.Program.Directors)
+                {
+                    <h8>@(director.Equals(last) ? Html.Raw("<a href=\"" + Url.Action("peopleinfo", "Home", new { name = director }) + "\">" + director + "</a>") : Html.Raw("<a href=\"" + Url.Action("peopleinfo", "Home", new { name = director }) + "\">" + director + "</a>" + ", "))</h8>
+                }</h7>
+            <br>
+
+            @{ last = Model.Program.Writers.Last(); }
+            <h7>Writer(s): @foreach (var writer in Model.Program.Writers)
+                {
+                    <h8>@(writer.Equals(last) ? Html.Raw("<a href=\"" + Url.Action("peopleinfo", "Home", new { name = writer }) + "\">" + writer + "</a>") : Html.Raw("<a href=\"" + Url.Action("peopleinfo", "Home", new { name = writer }) + "\">" + writer + "</a>" + ", "))</h8>
+                }</h7>
+            <!-- end Description -->
+
+            <div class="cl">&nbsp;</div>
+        </div>
+        <!-- end Box -->
+
+
+        <!-- begin Box -->
+        @if (Model.Suggestions.SuggestedPrograms.Any())
+        {
+            @Html.Raw("<h4>Suggested Movies</h4>");
+        }
+        else
+        {
+            @Html.Raw("<h3>No Suggestions</h3>");
+        }
+
+        @{
+            var x = 0;
+        }
+
+        @foreach (var program in Model.Suggestions.SuggestedPrograms)
+        {
+            if (x % 6 == 0)
+            {
+                @Html.Raw("<!-- Box --><div class=\"box\"><div class=\"head\" ></div>")
+            }
+                <!-- Movie -->
+            @(((x + 1) % 6 != 0) ? Html.Raw("<div class=\"movie\">") : Html.Raw("<div class=\"movie last\">"))
+
+            <div class="movie-image">
+                <a href="@Url.Action("programinfo", "Home", new {id = program._id})">
+                    <span class="play">
+                        <span class="name">@program.Title</span>
+                    </span>
+                    <img src="@program.Poster" alt="@program.Title" width="153" height="214" />
+                </a>
+            </div>
+            <div class="rating">
+                <p>RATING</p>
+                <div class="stars">
+                    <div class="stars-in" style="width: @Html.Raw((double.Parse(program.Rating)/2/5)*60 + "px")">
+
+                    </div>
+                </div>
+            </div>
+            if (true)
+            {
+                @Html.Raw("</div>")
+            }
+            <!-- end Movie -->
+
+            {
+                x = x + 1;
+            }
+
+            if (x % 6 == 0 || program._id == Model.Suggestions.SuggestedPrograms.Last()._id)
+            {
+                @Html.Raw("<div class=\"cl\">&nbsp;</div></div><!-- end Box -->")
+            }
+        }
+
+    </div>
+    <!-- end Content -->
+    <div class="cl">&nbsp;</div>
+</div>
+<!-- end Main -->

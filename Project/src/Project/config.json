@@ -1,0 +1,13 @@
+﻿{
+  "Data": {
+    "connectionstring": "mongodb://MongoLab-rh:UXlyyesE1jKn0GYZVMiGTgwg9pFvsLAgeVYVOOmplJ4-@ds058548.mlab.com:58548/MongoLab-rh",
+    "database": "MongoLab-rh",
+    "collections": {
+      "Programs": "Programs",
+      "People": "People",
+      "Suggestions": "Suggestions",
+      "Configurations": "Configurations",
+      "Counters": "Counters"
+    }
+  }
+}
